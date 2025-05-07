@@ -1,0 +1,113 @@
+package com.BNKBankApp.service;
+import com.BNKBankApp.data.model.Admin;
+import com.BNKBankApp.data.model.Inventory;
+import com.BNKBankApp.data.model.Product;
+import com.BNKBankApp.data.model.Role;
+import com.BNKBankApp.data.repository.AddressRepo;
+import com.BNKBankApp.data.repository.AdminRepo;
+import com.BNKBankApp.dto.request.AddProductRequest;
+import com.BNKBankApp.dto.request.AdminRegisterRequest;
+import com.BNKBankApp.dto.request.CreateCategoryRequest;
+import com.BNKBankApp.dto.resonse.*;
+import com.BNKBankApp.exception.InvalidEmailException;
+import com.BNKBankApp.util.VerifyEmail;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static com.BNKBankApp.util.Mapper.map;
+
+@Service
+public class AdminServiceImpl implements AdminService {
+
+    @Autowired
+    AddressRepo addressRepo;
+    @Autowired
+    private AdminRepo adminRepo;
+    @Autowired
+    private VerifyEmail verifyEmail;
+
+    @Override
+    public AdminRegisterResponse registerAdmin(AdminRegisterRequest registerAdminRequest) {
+        Admin foundAdmin = adminRepo.findByEmail(registerAdminRequest.getEmail());
+        if(foundAdmin == null) {
+            Admin admin = map(registerAdminRequest);
+            adminRepo.save(admin);
+        }
+        if(!verifyEmail.isVerifiedEmail(registerAdminRequest.getEmail())) {
+            throw new InvalidEmailException("Invalid email, Please try again");
+        }
+        AdminRegisterResponse adminRegisterResponse = new AdminRegisterResponse();
+        adminRegisterResponse.setEmail(registerAdminRequest.getEmail());
+        adminRegisterResponse.setUsername(registerAdminRequest.getUsername());
+        adminRegisterResponse.setStatus("Success");
+        adminRegisterResponse.setRole(Role.Admin);
+        return adminRegisterResponse;
+    }
+
+    @Override
+    public CreatedCategoryResponse createCategory(CreateCategoryRequest createCategoryRequest) {
+        return null;
+    }
+
+    @Override
+    public AddedProductResponse addProduct(AddProductRequest addProductRequest) {
+        return null;
+    }
+
+    @Override
+    public AllProductsInACategoryResponse getAllProductsInACategory(String category) {
+        return null;
+    }
+
+    @Override
+    public Inventory findByProductId(String Id) {
+        return null;
+    }
+
+    @Override
+    public List<Inventory> getAllInventory() {
+        return List.of();
+    }
+
+    @Override
+    public void removeProduct(String productId) {
+
+    }
+
+    @Override
+    public Product findProduct(String name) {
+        return null;
+    }
+
+    @Override
+    public ProcessOrderResponse processOrder(String orderId) {
+        return null;
+    }
+
+    @Override
+    public Admin findByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return false;
+    }
+
+    @Override
+    public Admin findByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return false;
+    }
+
+    @Override
+    public void deleteAll() {
+        adminRepo.deleteAll();
+    }
+}

@@ -18,16 +18,16 @@ class AddressServiceImplTest {
 
     @Autowired
     AddressServiceImpl addressServiceImpl;
-//
-//    @BeforeEach
-//    void setUp() {
-//        addressServiceImpl.deleteAll();
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        addressServiceImpl.deleteAll();
-//    }
+
+    @BeforeEach
+    void setUp() {
+        addressServiceImpl.deleteAll();
+    }
+
+    @AfterEach
+    void tearDown() {
+        addressServiceImpl.deleteAll();
+    }
 
     @Test
     void addAddressTest() {

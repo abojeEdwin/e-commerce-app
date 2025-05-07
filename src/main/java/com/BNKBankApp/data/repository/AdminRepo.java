@@ -1,8 +1,7 @@
 package com.BNKBankApp.data.repository;
 import com.BNKBankApp.data.model.Admin;
-import com.BNKBankApp.data.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import java.util.Optional;
+
 
 public interface AdminRepo extends MongoRepository<Admin, String> {
 
