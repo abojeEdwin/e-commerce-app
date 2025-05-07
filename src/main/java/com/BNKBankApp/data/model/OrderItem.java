@@ -11,5 +11,7 @@ public class OrderItem {
     private String id;
     private String orderId;
     private String productId;
-    private String userId;
+    private Cart cart;
+    private double unitPrice;
+    private int quantity;
 }

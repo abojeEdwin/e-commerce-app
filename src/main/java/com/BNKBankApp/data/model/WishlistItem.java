@@ -10,6 +10,6 @@ public class WishlistItem {
     @Id
     private String id;
     private Product product;
-    private String userId;
+    private String wishlistId;
 
 }
