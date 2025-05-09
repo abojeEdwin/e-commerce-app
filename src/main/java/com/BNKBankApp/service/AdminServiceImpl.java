@@ -5,10 +5,13 @@ import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.data.model.Role;
 import com.BNKBankApp.data.repository.AddressRepo;
 import com.BNKBankApp.data.repository.AdminRepo;
+import com.BNKBankApp.data.repository.CategoryRepo;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
 import com.BNKBankApp.dto.request.CreateCategoryRequest;
 import com.BNKBankApp.dto.resonse.*;
+import com.BNKBankApp.exception.DuplicateEmailException;
+import com.BNKBankApp.exception.DuplicateUsernameException;
 import com.BNKBankApp.exception.InvalidEmailException;
 import com.BNKBankApp.util.VerifyEmail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,10 @@ public class AdminServiceImpl implements AdminService {
     private AdminRepo adminRepo;
     @Autowired
     private VerifyEmail verifyEmail;
+    @Autowired
+    private CategoryRepo categoryRepo;
+
+    private CategoryService categoryService;
 
     @Override
     public AdminRegisterResponse registerAdmin(AdminRegisterRequest registerAdminRequest) {
@@ -37,6 +44,12 @@ public class AdminServiceImpl implements AdminService {
         }
         if(!verifyEmail.isVerifiedEmail(registerAdminRequest.getEmail())) {
             throw new InvalidEmailException("Invalid email, Please try again");
+        }
+        if(adminRepo.existsByEmail(registerAdminRequest.getEmail())) {
+            throw new DuplicateEmailException("Email already exists");
+        }
+        if(adminRepo.existsByUsername(registerAdminRequest.getUsername())) {
+            throw new DuplicateUsernameException("Username already exists");
         }
         AdminRegisterResponse adminRegisterResponse = new AdminRegisterResponse();
         adminRegisterResponse.setEmail(registerAdminRequest.getEmail());
