@@ -1,5 +1,9 @@
 package com.BNKBankApp.dto.resonse;
+import lombok.Data;
 
+
+
+@Data
 public class AddedProductResponse {
 
     private String id;

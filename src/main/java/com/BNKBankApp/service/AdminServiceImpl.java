@@ -30,7 +30,10 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private CategoryRepo categoryRepo;
 
+    @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductServiceImpl productServiceImpl;
 
     @Override
     public AdminRegisterResponse registerAdmin(AdminRegisterRequest registerAdminRequest) {
@@ -58,12 +61,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public CreatedCategoryResponse createCategory(CreateCategoryRequest createCategoryRequest) {
-        return null;
+        CreatedCategoryResponse response  = categoryService.createCategory(createCategoryRequest);
+        return response;
     }
 
     @Override
     public AddedProductResponse addProduct(AddProductRequest addProductRequest) {
-        return null;
+        return productServiceImpl.addProduct(addProductRequest);
     }
 
     @Override

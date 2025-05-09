@@ -1,9 +1,13 @@
 package com.BNKBankApp.dto.resonse;
+import lombok.Data;
+import java.util.Date;
 
+
+@Data
 public class CreatedInventoryResponse {
     private String status;
     private String productId;
-    private String stockQuantity;
-    private String lastRestockedDate;
+    private int stockQuantity;
+    private Date lastRestockedDate;
 
 }

@@ -1,5 +1,7 @@
 package com.BNKBankApp.dto.resonse;
+import lombok.Data;
 
+@Data
 public class CreatedCategoryResponse {
 
     private String id;

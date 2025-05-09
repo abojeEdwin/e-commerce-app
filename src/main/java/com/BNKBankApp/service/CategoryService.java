@@ -6,6 +6,6 @@ import com.BNKBankApp.dto.resonse.CreatedCategoryResponse;
 
 public interface CategoryService {
     CreatedCategoryResponse createCategory(CreateCategoryRequest createCategoryRequest);
-    void deleteAllCategories();
+    void deleteAll();
     Category findByName(String category);
 }

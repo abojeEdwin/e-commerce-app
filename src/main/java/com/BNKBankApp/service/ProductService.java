@@ -18,4 +18,5 @@ public interface ProductService {
     List<Product> findAllProducts();
     List<Product> findProductsByCategory(String category);
     ProductReviewResponse addReview(ProductReviewRequest productReviewRequest);
+    long count();
 }

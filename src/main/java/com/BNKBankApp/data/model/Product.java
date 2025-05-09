@@ -13,7 +13,7 @@ public class Product {
     private double price;
     private int quantity;
     private String imageUrl;
-    private String category;
-    private double averagePrice;
+    private String categoryId;
+    private double averageRating;
 
 }
