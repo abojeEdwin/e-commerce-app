@@ -1,8 +1,5 @@
 package com.BNKBankApp.service;
-import com.BNKBankApp.data.model.Admin;
-import com.BNKBankApp.data.model.Inventory;
-import com.BNKBankApp.data.model.Product;
-import com.BNKBankApp.data.model.Role;
+import com.BNKBankApp.data.model.*;
 import com.BNKBankApp.data.repository.AddressRepo;
 import com.BNKBankApp.data.repository.AdminRepo;
 import com.BNKBankApp.data.repository.CategoryRepo;
@@ -92,6 +89,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Product findProduct(String name) {
         return null;
+    }
+
+    @Override
+    public List<Order> checkListOfOrders() {
+        return List.of();
     }
 
     @Override

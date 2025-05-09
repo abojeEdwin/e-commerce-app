@@ -2,6 +2,7 @@ package com.BNKBankApp.service;
 
 import com.BNKBankApp.data.model.Admin;
 import com.BNKBankApp.data.model.Inventory;
+import com.BNKBankApp.data.model.Order;
 import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
@@ -19,6 +20,7 @@ public interface AdminService {
      List<Inventory> getAllInventory();
      void removeProduct(String productId);
      Product findProduct(String name);
+     List <Order> checkListOfOrders();
      ProcessOrderResponse processOrder(String orderId);
     Admin findByUsername(String username);
     boolean existsByEmail(String email);
