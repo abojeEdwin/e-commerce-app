@@ -105,7 +105,7 @@ class AdminServiceImplTest {
         createdCategoryRequest.setName("Clothings");
         createdCategoryRequest.setDescription("Clothings Category");
         adminServiceImpl.createCategory(createdCategoryRequest);
-        assertEquals(1,categoryRepo.count());
+        assertEquals(1,categoryServiceImpl.count());
     }
 
     @Test
@@ -114,7 +114,7 @@ class AdminServiceImplTest {
         createdCategoryRequest.setName("Electric Appliances");
         createdCategoryRequest.setDescription("Electric Appliances Category");
         adminServiceImpl.createCategory(createdCategoryRequest);
-        assertEquals(1,categoryRepo.count());
+        assertEquals(1,categoryServiceImpl.count());
         assertEquals("Electric Appliances Category", categoryServiceImpl.findByName("Electric Appliances").getDescription());
     }
 

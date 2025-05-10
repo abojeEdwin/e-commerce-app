@@ -8,4 +8,5 @@ public interface CategoryService {
     CreatedCategoryResponse createCategory(CreateCategoryRequest createCategoryRequest);
     void deleteAll();
     Category findByName(String category);
+    long count();
 }

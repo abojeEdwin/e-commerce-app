@@ -26,10 +26,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepo productRepo;
-
     @Autowired
     private InventoryServiceImpl inventoryServiceImpl;
-
     @Autowired
     private CategoryServiceImpl categoryServiceImpl;
 
@@ -73,12 +71,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public AllProductsInACategoryResponse getAllProductsInACategory(String category) {
-        AllProductsInACategoryResponse allProductsInACategoryResponse = new AllProductsInACategoryResponse();
         Category foundCategory = categoryServiceImpl.findByName(category);
-        List<Product> tempProductList = productRepo.findByCategoryId(foundCategory.getId());
-
-        allProductsInACategoryResponse.setProductList(tempProductList);
-        allProductsInACategoryResponse.setTotal(tempProductList.size());
+        List<Product> product = productRepo.findByCategoryId(foundCategory.getId());
+        AllProductsInACategoryResponse allProductsInACategoryResponse = new AllProductsInACategoryResponse();
+        allProductsInACategoryResponse.setProductList(product);
+        allProductsInACategoryResponse.setTotal(product.size());
         return allProductsInACategoryResponse;
     }
 
