@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepo extends MongoRepository<Category, String> {
-    Category findCategoryByName(String name);
+    Category findByName(String name);
 
 }

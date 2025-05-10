@@ -72,7 +72,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AllProductsInACategoryResponse getAllProductsInACategory(String category) {
-        return null;
+        return productServiceImpl.getAllProductsInACategory(category);
     }
 
     @Override
@@ -86,8 +86,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void removeProduct(String productId) {
-
+    public void removeProduct(String productName) {
+        productServiceImpl.removeProductByName(productName);
     }
 
     @Override

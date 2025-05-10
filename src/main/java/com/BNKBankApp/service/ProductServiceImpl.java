@@ -1,5 +1,6 @@
 package com.BNKBankApp.service;
 
+import com.BNKBankApp.data.model.Category;
 import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.data.repository.ProductRepo;
 import com.BNKBankApp.dto.request.AddProductRequest;
@@ -9,13 +10,16 @@ import com.BNKBankApp.dto.resonse.AddedProductResponse;
 import com.BNKBankApp.dto.resonse.AllProductsInACategoryResponse;
 import com.BNKBankApp.dto.resonse.CreatedInventoryResponse;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
+import com.BNKBankApp.exception.NoProductFoundException;
 import com.BNKBankApp.exception.ProductAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -26,9 +30,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private InventoryServiceImpl inventoryServiceImpl;
 
-    public ProductServiceImpl(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
+    @Autowired
+    private CategoryServiceImpl categoryServiceImpl;
 
     @Override
     public AddedProductResponse addProduct(AddProductRequest addProductRequest) {
@@ -50,13 +53,14 @@ public class ProductServiceImpl implements ProductService {
             CreatedInventoryResponse createdInventoryResponse = inventoryServiceImpl.addProductToInventory(createInventoryRequest);
 
             AddedProductResponse response = new AddedProductResponse();
-            response.setCategory(product.getCategoryId());
+            response.setCategoryId(product.getCategoryId());
             response.setDescription(product.getDescription());
             response.setImageUrl(product.getImageUrl());
             response.setQuantity(product.getQuantity());
             response.setName(product.getName());
             response.setPrice(product.getPrice());
             response.setStatus("Success");
+            response.setId(product.getId());
             return response;
         }
         throw new ProductAlreadyExistException("Product already exists");
@@ -69,17 +73,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public AllProductsInACategoryResponse getAllProductsInACategory(String category) {
-        return null;
+        AllProductsInACategoryResponse allProductsInACategoryResponse = new AllProductsInACategoryResponse();
+        Category foundCategory = categoryServiceImpl.findByName(category);
+        List<Product> tempProductList = productRepo.findByCategoryId(foundCategory.getId());
+
+        allProductsInACategoryResponse.setProductList(tempProductList);
+        allProductsInACategoryResponse.setTotal(tempProductList.size());
+        return allProductsInACategoryResponse;
     }
 
     @Override
     public void removeProductByName(String productName) {
-
+        Product foundProduct = findProduct(productName);
+        if(foundProduct == null){
+            throw new NoProductFoundException("Product Does Not Exist");
+        }
+        productRepo.delete(foundProduct);
     }
 
     @Override
     public Product findProduct(String productName) {
-        return null;
+        Product foundProduct = productRepo.findProductByName(productName);
+        if (foundProduct == null) {
+            throw new NoProductFoundException("No Product Found");
+        }
+        return foundProduct;
     }
 
     @Override

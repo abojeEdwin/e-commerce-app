@@ -12,6 +12,6 @@ public class AddedProductResponse {
     private double price;
     private int quantity;
     private String imageUrl;
-    private String category;
+    private String categoryId;
     private String status;
 }

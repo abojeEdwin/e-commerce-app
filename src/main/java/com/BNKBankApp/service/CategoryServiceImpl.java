@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CreatedCategoryResponse createCategory(CreateCategoryRequest createCategoryRequest) {
-        Category foundCategory = categoryRepo.findCategoryByName(createCategoryRequest.getName());
+        Category foundCategory = categoryRepo.findByName(createCategoryRequest.getName());
         if(foundCategory == null){
             Category category = new Category();
             category.setName(createCategoryRequest.getName());
@@ -27,6 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
             CreatedCategoryResponse response = new CreatedCategoryResponse();
             response.setDescription(createCategoryRequest.getDescription());
             response.setName(createCategoryRequest.getName());
+            response.setStatus("Success");
+            response.setId(category.getId());
             return response;
         }
         throw new CategoryAlreadyExistException("Category Already Exist");
@@ -39,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findByName(String category) {
-        Category foundCategory = categoryRepo.findCategoryByName(category);
+        Category foundCategory = categoryRepo.findByName(category);
         if(foundCategory == null){
             throw new NoSuchCategoryFoundException("No Such Category Found");
         }
