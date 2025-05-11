@@ -34,6 +34,8 @@ public class AdminServiceImpl implements AdminService {
     private CategoryService categoryService;
     @Autowired
     private ProductServiceImpl productServiceImpl;
+    @Autowired
+    private InventoryServiceImpl inventoryServiceImpl;
 
     @Override
     public AdminRegisterResponse registerAdmin(AdminRegisterRequest registerAdminRequest) {
@@ -77,12 +79,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Inventory findByProductId(String Id) {
-        return null;
+        return inventoryServiceImpl.findProductById(Id);
     }
 
     @Override
     public List<Inventory> getAllInventory() {
-        return List.of();
+        return inventoryServiceImpl.getAllInventory();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.BNKBankApp.data.repository.InventoryRepo;
 import com.BNKBankApp.dto.request.CreateCategoryRequest;
 import com.BNKBankApp.dto.request.CreateInventoryRequest;
 import com.BNKBankApp.dto.resonse.CreatedInventoryResponse;
+import com.BNKBankApp.exception.NoProductFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,11 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public Inventory findProductById(String productId) {
-        return null;
+        Inventory foundInventory = inventoryRepo.findByProductId(productId);
+        if (foundInventory == null) {
+            throw new NoProductFoundException("Product not found");
+        }
+        return foundInventory;
     }
 
     @Override
@@ -46,6 +51,6 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public List<Inventory> getAllInventory() {
-        return List.of();
+        return inventoryRepo.findAll();
     }
 }

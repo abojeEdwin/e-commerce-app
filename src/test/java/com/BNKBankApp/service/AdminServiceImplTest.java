@@ -1,5 +1,6 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.Admin;
+import com.BNKBankApp.data.model.Inventory;
 import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.data.model.Role;
 import com.BNKBankApp.data.repository.AdminRepo;
@@ -221,6 +222,75 @@ class AdminServiceImplTest {
         assertEquals(2,allProductsInACategoryResponse.getTotal());
     }
 
+    @Test
+    public void testAdminCanGetAProductInInventory(){
+        CreateCategoryRequest createdCategoryRequest = new CreateCategoryRequest();
+        createdCategoryRequest.setName("Electric Appliances");
+        createdCategoryRequest.setDescription("Electric Appliances Category");
+        CreatedCategoryResponse  response = adminServiceImpl.createCategory(createdCategoryRequest);
 
+        CreateCategoryRequest createdCategoryRequest2 = new CreateCategoryRequest();
+        createdCategoryRequest2.setName("Food");
+        createdCategoryRequest2.setDescription("Food Stuff Category");
+        CreatedCategoryResponse response1 =  adminServiceImpl.createCategory(createdCategoryRequest2);
+        assertEquals("Food",response1.getName());
+
+        AddProductRequest addProductRequest = new AddProductRequest();
+        addProductRequest.setCategoryId(response1.getId());
+        addProductRequest.setDescription("Coco Yam");
+        addProductRequest.setName("Yam");
+        addProductRequest.setPrice(1000.0);
+        addProductRequest.setQuantity(10);
+        AddedProductResponse productResponse = adminServiceImpl.addProduct(addProductRequest);
+        assertEquals("Success",productResponse.getStatus());
+        assertEquals(response1.getId(),productResponse.getCategoryId());
+
+        AddProductRequest addProductRequest2 = new AddProductRequest();
+        addProductRequest2.setCategoryId(response1.getId());
+        addProductRequest2.setDescription("Vegetable Oil");
+        addProductRequest2.setName("Grand pure soya oil");
+        addProductRequest2.setPrice(1200.0);
+        addProductRequest2.setQuantity(10);
+        AddedProductResponse productResponse2 = adminServiceImpl.addProduct(addProductRequest2);
+
+        Inventory productInInventoryResponse = adminServiceImpl.findByProductId(productResponse2.getId());
+        assertEquals(productInInventoryResponse.getProductId(),productResponse2.getId());
+    }
+
+    @Test
+    public void testAdminCanGetAllProductsInInventory(){
+        CreateCategoryRequest createdCategoryRequest = new CreateCategoryRequest();
+        createdCategoryRequest.setName("Electric Appliances");
+        createdCategoryRequest.setDescription("Electric Appliances Category");
+        CreatedCategoryResponse  response = adminServiceImpl.createCategory(createdCategoryRequest);
+
+        CreateCategoryRequest createdCategoryRequest2 = new CreateCategoryRequest();
+        createdCategoryRequest2.setName("Food");
+        createdCategoryRequest2.setDescription("Food Stuff Category");
+        CreatedCategoryResponse response1 =  adminServiceImpl.createCategory(createdCategoryRequest2);
+        assertEquals("Food",response1.getName());
+
+        AddProductRequest addProductRequest = new AddProductRequest();
+        addProductRequest.setCategoryId(response1.getId());
+        addProductRequest.setDescription("Coco Yam");
+        addProductRequest.setName("Yam");
+        addProductRequest.setPrice(1000.0);
+        addProductRequest.setQuantity(10);
+        AddedProductResponse productResponse = adminServiceImpl.addProduct(addProductRequest);
+        assertEquals("Success",productResponse.getStatus());
+        assertEquals(response1.getId(),productResponse.getCategoryId());
+
+        AddProductRequest addProductRequest2 = new AddProductRequest();
+        addProductRequest2.setCategoryId(response1.getId());
+        addProductRequest2.setDescription("Vegetable Oil");
+        addProductRequest2.setName("Grand pure soya oil");
+        addProductRequest2.setPrice(1200.0);
+        addProductRequest2.setQuantity(10);
+        AddedProductResponse productResponse2 = adminServiceImpl.addProduct(addProductRequest2);
+
+        List<Inventory> productsInInventory = adminServiceImpl.getAllInventory();
+        assertEquals(2,productsInInventory.size());
+
+    }
 
 }
