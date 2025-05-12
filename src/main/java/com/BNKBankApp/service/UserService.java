@@ -4,8 +4,10 @@ import com.BNKBankApp.data.model.Cart;
 import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.data.model.User;
 import com.BNKBankApp.dto.request.AddToCartRequest;
+import com.BNKBankApp.dto.request.LoginRequest;
 import com.BNKBankApp.dto.request.ProductReviewRequest;
 import com.BNKBankApp.dto.request.UserRegisterRequest;
+import com.BNKBankApp.dto.resonse.LoginResponse;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
 
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 public interface UserService {
     UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest);
+    LoginResponse loginUser(LoginRequest loginRequest);
     Product findProduct(String productName);
     List<Product> findProductsByCategoryName(String category);
     Cart addProductToCart(List<AddToCartRequest> addToCartRequests);
@@ -21,5 +24,7 @@ public interface UserService {
     List <Cart> removeProductFromCartByProductName(String productName);
     ProductReviewResponse productReview(ProductReviewRequest productReviewRequest);
     Optional<User> findUserByUsername(String username);
+    void deleteAll();
+    long count();
 
 }

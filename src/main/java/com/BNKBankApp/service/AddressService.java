@@ -5,7 +5,7 @@ import com.BNKBankApp.data.model.User;
 
 public interface AddressService {
 
-    Address addAddress(Address address, User user);
+    Address addAddress(Address address, String userId);
     void deleteAll();
     long count();
 

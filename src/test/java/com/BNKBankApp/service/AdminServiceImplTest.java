@@ -293,4 +293,9 @@ class AdminServiceImplTest {
 
     }
 
+    @Test
+    public void testAdminCanCheckListOfOrders(){
+
+    }
+
 }

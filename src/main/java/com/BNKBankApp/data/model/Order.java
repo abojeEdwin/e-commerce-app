@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Order {
     @Id
     private String id;
-    private String orderId;
+    private String userId;
     private String cartId;
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;

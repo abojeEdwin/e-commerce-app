@@ -49,7 +49,9 @@ class AddressServiceImplTest {
         user.setRole(Role.User);
         user.setAddress(address);
 
-        addressServiceImpl.addAddress(address, user);
+        String userId = user.getId();
+
+        addressServiceImpl.addAddress(address, userId);
         assertEquals(1,addressServiceImpl.count());
     }
 
