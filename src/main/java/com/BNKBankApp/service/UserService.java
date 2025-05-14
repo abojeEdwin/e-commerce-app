@@ -1,5 +1,4 @@
 package com.BNKBankApp.service;
-
 import com.BNKBankApp.data.model.Cart;
 import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.data.model.User;
@@ -7,9 +6,9 @@ import com.BNKBankApp.dto.request.*;
 import com.BNKBankApp.dto.resonse.LoginResponse;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
-
 import java.util.List;
 import java.util.Optional;
+
 
 public interface UserService {
     UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest);

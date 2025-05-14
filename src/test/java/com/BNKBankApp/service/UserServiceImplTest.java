@@ -1,5 +1,4 @@
 package com.BNKBankApp.service;
-import com.BNKBankApp.data.model.Address;
 import com.BNKBankApp.dto.request.AddressRequest;
 import com.BNKBankApp.dto.request.UserRegisterRequest;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
@@ -16,15 +15,15 @@ class UserServiceImplTest {
 
     @Autowired
     UserServiceImpl userServiceImpl;
-//
-//    @BeforeEach
-//    void setUp() {
-//        userServiceImpl.deleteAll();
-//    }
-//    @AfterEach
-//    void tearDown() {
-//        userServiceImpl.deleteAll();
-//    }
+
+    @BeforeEach
+    void setUp() {
+        userServiceImpl.deleteAll();
+    }
+    @AfterEach
+    void tearDown() {
+        userServiceImpl.deleteAll();
+    }
 
     @Test
     public void testUserCanRegister() {

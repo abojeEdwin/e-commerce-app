@@ -20,10 +20,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
     @Autowired
-    HashPassword hashPassword;
-    @Autowired
-    AddressServiceImpl addressServiceImpl;
-    @Autowired
     private AddressRepo addressRepo;
 
     @Override
@@ -46,9 +42,7 @@ public class UserServiceImpl implements UserService {
         address.setLgaName(addressRequest.getLgaName());
         address.setStreetName(addressRequest.getStreetName());
         address.setStreetNumber(addressRequest.getStreetNumber());
-        Address savedAddress = addressRepo.save(address);
-
-
+        addressRepo.save(address);
 
         UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
         userRegisterResponse.setUsername(savedUser.getUsername());
