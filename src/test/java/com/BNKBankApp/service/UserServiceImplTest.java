@@ -1,5 +1,6 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.Address;
+import com.BNKBankApp.dto.request.AddressRequest;
 import com.BNKBankApp.dto.request.UserRegisterRequest;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -27,13 +28,6 @@ class UserServiceImplTest {
 
     @Test
     public void testUserCanRegister() {
-        Address address = new Address();
-        address.setStreetName("Olatunji");
-        address.setStreetNumber("12");
-        address.setCity("Oakland");
-        address.setLgaName("Bariga");
-        address.setPostalCode("9410");
-        address.setCountry("Nigeria");
 
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
         userRegisterRequest.setUsername("Osundu");
@@ -42,9 +36,16 @@ class UserServiceImplTest {
         userRegisterRequest.setFirstName("Benjamin");
         userRegisterRequest.setLastName("Jacob");
         userRegisterRequest.setPhoneNumber("1234567890");
-        userRegisterRequest.setAddress(address);
 
-        UserRegisterResponse registerResponse = userServiceImpl.registerUser(userRegisterRequest);
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setCity("Lagos");
+        addressRequest.setPostalCode("9410");
+        addressRequest.setCountry("Nigeria");
+        addressRequest.setStreetNumber("17");
+        addressRequest.setLgaName("Bariga");
+        addressRequest.setUserId(" ");
+
+        UserRegisterResponse registerResponse = userServiceImpl.registerUser(userRegisterRequest,addressRequest);
         assertEquals("Success",registerResponse.getStatus());
         assertEquals("Osundu",registerResponse.getUsername());
     }

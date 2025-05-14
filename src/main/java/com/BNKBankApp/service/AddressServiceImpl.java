@@ -15,27 +15,6 @@ public class AddressServiceImpl implements AddressService{
 //    private UserServiceImpl userServiceImpl;
 
     @Override
-    public Address addAddress(Address address, String userId) {
-//        User foundUser = userServiceImpl.findUserById(userId);
-//        if(foundUser == null) {
-//            throw new UserNotFoundException("User does not exist");
-//        }
-        Address newAddress = new Address();
-        newAddress.setCity(address.getCity());
-        newAddress.setLgaName(address.getLgaName());
-        newAddress.setPostalCode(address.getPostalCode());
-        newAddress.setCountry(address.getCountry());
-        newAddress.setStreetNumber(address.getStreetNumber());
-        newAddress.setStreetName(address.getStreetName());
-//        if(foundUser.getAddress() == null){
-//            foundUser.setAddress(newAddress);
-//        }
-        return addressRepo.save(newAddress);
-    }
-
-
-
-    @Override
     public void deleteAll() {
         addressRepo.deleteAll();
     }
@@ -43,4 +22,17 @@ public class AddressServiceImpl implements AddressService{
     public long count() {
         return addressRepo.count();
     }
+
+//    @Override
+//    public Address save(Address address) {
+//        Address savedAddress = new Address();
+//        savedAddress.setPostalCode(address.getPostalCode());
+//        savedAddress.setCity(address.getCity());
+//        savedAddress.setCountry(address.getCountry());
+//        savedAddress.setUserId(address.getId());
+//        savedAddress.setLgaName(address.getLgaName());
+//        savedAddress.setStreetName(address.getStreetName());
+//        savedAddress.setStreetNumber(address.getStreetNumber());
+//        return addressRepo.save(savedAddress);
+//    }
 }

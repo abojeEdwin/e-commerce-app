@@ -29,31 +29,31 @@ class AddressServiceImplTest {
         addressServiceImpl.deleteAll();
     }
 
-    @Test
-    void addAddressTest() {
-        Address address = new Address();
-        address.setCity("Lagos");
-        address.setCountry("Nigeria");
-        address.setLgaName("Bariga");
-        address.setPostalCode("9410");
-        address.setStreetName("Olatunji");
-        address.setStreetNumber("12");
-
-        User user = new User();
-        user.setEmail("example@gmail.com");
-        user.setPassword("password");
-        user.setUsername("Bruise_Almighty");
-        user.setFirstName("Bruise");
-        user.setLastName("Almighty");
-        user.setPhoneNumber("+234567892");
-        user.setRole(Role.User);
-        user.setAddress(address);
-
-        String userId = user.getId();
-
-        addressServiceImpl.addAddress(address, userId);
-        assertEquals(1,addressServiceImpl.count());
-    }
+//    @Test
+//    void addAddressTest() {
+//        Address address = new Address();
+//        address.setCity("Lagos");
+//        address.setCountry("Nigeria");
+//        address.setLgaName("Bariga");
+//        address.setPostalCode("9410");
+//        address.setStreetName("Olatunji");
+//        address.setStreetNumber("12");
+//
+//        User user = new User();
+//        user.setEmail("example@gmail.com");
+//        user.setPassword("password");
+//        user.setUsername("Bruise_Almighty");
+//        user.setFirstName("Bruise");
+//        user.setLastName("Almighty");
+//        user.setPhoneNumber("+234567892");
+//        user.setRole(Role.User);
+//        user.setAddress(address);
+//
+//        String userId = user.getId();
+//
+//        addressServiceImpl.addAddress(address, userId);
+//        assertEquals(1,addressServiceImpl.count());
+//    }
 
 
 }

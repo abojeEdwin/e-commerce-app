@@ -1,9 +1,13 @@
 package com.BNKBankApp.dto.request;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 
 
 @Data
+@NotNull
+@NotBlank
 public class AddProductRequest {
     private String name;
     private String description;

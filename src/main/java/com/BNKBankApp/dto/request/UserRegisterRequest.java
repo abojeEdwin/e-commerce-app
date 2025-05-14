@@ -1,17 +1,24 @@
 package com.BNKBankApp.dto.request;
-import com.BNKBankApp.data.model.Address;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-
-
-
 @Data
+@NotBlank
 public class UserRegisterRequest {
+    private String id;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank
     private String password;
-    private Address address;
+    @NotBlank
     private String phoneNumber;
+    @NotBlank
     private String username;
+
 }

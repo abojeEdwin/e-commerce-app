@@ -2,10 +2,7 @@ package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.*;
 import com.BNKBankApp.data.repository.AddressRepo;
 import com.BNKBankApp.data.repository.UserRepo;
-import com.BNKBankApp.dto.request.AddToCartRequest;
-import com.BNKBankApp.dto.request.LoginRequest;
-import com.BNKBankApp.dto.request.ProductReviewRequest;
-import com.BNKBankApp.dto.request.UserRegisterRequest;
+import com.BNKBankApp.dto.request.*;
 import com.BNKBankApp.dto.resonse.LoginResponse;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
@@ -30,11 +27,9 @@ public class UserServiceImpl implements UserService {
     private AddressRepo addressRepo;
 
     @Override
-    public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest) {
+    public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest) {
         User user = new User();
-//        Address address = userRegisterRequest.getAddress();
         String hashedPassword = HashPassword.hashPassword(userRegisterRequest.getPassword());
-
         user.setEmail(userRegisterRequest.getEmail());
         user.setPassword(hashedPassword);
         user.setFirstName(userRegisterRequest.getFirstName());
@@ -43,10 +38,16 @@ public class UserServiceImpl implements UserService {
         user.setRole(Role.User);
         User savedUser = userRepo.save(user);
 
-//        address.setUserId(savedUser.getId());
-//        Address savedAddress = addressRepo.save(address);
-//        savedUser.setAddress(savedAddress);
-        userRepo.save(savedUser);
+        Address address = new Address();
+        address.setPostalCode(addressRequest.getPostalCode());
+        address.setCity(addressRequest.getCity());
+        address.setCountry(addressRequest.getCountry());
+        address.setUserId(user.getId());
+        address.setLgaName(addressRequest.getLgaName());
+        address.setStreetName(addressRequest.getStreetName());
+        address.setStreetNumber(addressRequest.getStreetNumber());
+        Address savedAddress = addressRepo.save(address);
+
 
 
         UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
