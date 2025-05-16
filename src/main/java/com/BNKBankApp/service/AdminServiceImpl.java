@@ -44,15 +44,9 @@ public class AdminServiceImpl implements AdminService {
             Admin admin = map(registerAdminRequest);
             adminRepo.save(admin);
         }
-        if(!verifyEmail.isVerifiedEmail(registerAdminRequest.getEmail())) {
-            throw new InvalidEmailException("Invalid email, Please try again");
-        }
-        if(adminRepo.existsByEmail(registerAdminRequest.getEmail())) {
-            throw new DuplicateEmailException("Email already exists");
-        }
-        if(adminRepo.existsByUsername(registerAdminRequest.getUsername())) {
-            throw new DuplicateUsernameException("Username already exists");
-        }
+        if(!verifyEmail.isVerifiedEmail(registerAdminRequest.getEmail())) {throw new InvalidEmailException("Invalid email, Please try again");}
+        if(adminRepo.existsByEmail(registerAdminRequest.getEmail())) {throw new DuplicateEmailException("Email already exists");}
+        if(adminRepo.existsByUsername(registerAdminRequest.getUsername())) {throw new DuplicateUsernameException("Username already exists");}
         AdminRegisterResponse adminRegisterResponse = new AdminRegisterResponse();
         adminRegisterResponse.setEmail(registerAdminRequest.getEmail());
         adminRegisterResponse.setUsername(registerAdminRequest.getUsername());

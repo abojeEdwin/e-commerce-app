@@ -16,13 +16,15 @@ public class AddressRequest {
     @NotBlank
     private String city;
     @NotBlank
+    @NotEmpty(message="This field cannot be empty")
     private String postalCode;
     @NotBlank
     @NotNull
     @NotEmpty(message="This field cannot be empty")
     private String country;
     @NotBlank
-    @NotEmpty
+    @NotEmpty(message="This feild cannot be empty")
+    @NotNull(message="This field cannot be null")
     private String lgaName;
 
 }

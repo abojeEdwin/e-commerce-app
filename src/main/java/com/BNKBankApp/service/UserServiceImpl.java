@@ -6,7 +6,10 @@ import com.BNKBankApp.dto.request.*;
 import com.BNKBankApp.dto.resonse.LoginResponse;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
+import com.BNKBankApp.exception.*;
 import com.BNKBankApp.util.HashPassword;
+import com.BNKBankApp.util.Jwt;
+import com.BNKBankApp.util.VerifyEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -21,9 +24,18 @@ public class UserServiceImpl implements UserService {
     UserRepo userRepo;
     @Autowired
     private AddressRepo addressRepo;
+    @Autowired
+    private VerifyEmail verifyEmail;
+    private static HashPassword hashPassword;
+    @Autowired
+    private Jwt jwtService;
 
     @Override
     public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest) {
+        if(userRepo.existsByEmail(userRegisterRequest.getEmail())){throw new EmailAlreadyExistException("Email already exist");}
+        if(!verifyEmail.isVerifiedEmail(userRegisterRequest.getEmail())){throw new InvalidEmailException("Invalid email, please try again.");}
+        if(userRepo.existsByUsername(userRegisterRequest.getUsername())){throw new DuplicateUsernameException("Username already exist");}
+
         User user = new User();
         String hashedPassword = HashPassword.hashPassword(userRegisterRequest.getPassword());
         user.setEmail(userRegisterRequest.getEmail());
@@ -53,7 +65,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginResponse loginUser(LoginRequest loginRequest) {
-        return null;
+       User foundUser = userRepo.findByEmail(loginRequest.getEmail());
+       if(foundUser == null){throw new UserNotFoundException("User not found");}
+       if(!HashPassword.verifyPassword(foundUser.getPassword(), loginRequest.getPassword())){throw new InvalidPasswordException("Incorrect Password, Try Again");}
+       String token = jwtService.generateToken(foundUser.getUsername());
+       LoginResponse loginResponse = new LoginResponse();
+       loginResponse.setStatus("Success");
+       loginResponse.setToken(token);
+       return new LoginResponse(loginResponse.getToken(),loginResponse.getStatus());
     }
 
     @Override

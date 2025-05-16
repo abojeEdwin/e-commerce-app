@@ -21,6 +21,7 @@ public class User {
     private String firstName;
     private String lastName;
     @Email(message="This field is required")
+    @Indexed(unique = true)
     private String email;
     private String phoneNumber;
     private Address address;

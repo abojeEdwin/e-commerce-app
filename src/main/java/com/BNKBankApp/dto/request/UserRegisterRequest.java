@@ -1,6 +1,7 @@
 package com.BNKBankApp.dto.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
@@ -10,6 +11,7 @@ public class UserRegisterRequest {
     @NotBlank
     private String firstName;
     @NotBlank
+    @NotEmpty
     private String lastName;
     @NotBlank
     @Email
