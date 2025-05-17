@@ -1,4 +1,5 @@
 package com.BNKBankApp.service;
+import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.dto.request.AddressRequest;
 import com.BNKBankApp.dto.request.LoginRequest;
 import com.BNKBankApp.dto.request.UserRegisterRequest;
@@ -10,6 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -18,14 +22,22 @@ class UserServiceImplTest {
 
     @Autowired
     UserServiceImpl userServiceImpl;
+    @Autowired
+    AddressServiceImpl addressServiceImpl;
+    @Autowired
+    ProductServiceImpl productServiceImpl;
 
     @BeforeEach
     void setUp() {
         userServiceImpl.deleteAll();
+        addressServiceImpl.deleteAll();
+//        productServiceImpl.deleteAllProducts();
     }
     @AfterEach
     void tearDown() {
         userServiceImpl.deleteAll();
+        addressServiceImpl.deleteAll();
+//        productServiceImpl.deleteAllProducts();
     }
 
     @Test
@@ -45,7 +57,6 @@ class UserServiceImplTest {
         addressRequest.setCountry("Nigeria");
         addressRequest.setStreetNumber("17");
         addressRequest.setLgaName("Bariga");
-        addressRequest.setUserId(" ");
 
         UserRegisterResponse registerResponse = userServiceImpl.registerUser(userRegisterRequest,addressRequest);
         assertEquals("Success",registerResponse.getStatus());
@@ -201,6 +212,88 @@ class UserServiceImplTest {
         loginRequest.setEmail("jiggydem@gmail.com");
         loginRequest.setPassword("password");
         assertThrows(UserNotFoundException.class,()->userServiceImpl.loginUser(loginRequest));
+    }
+
+    @Test
+    public void testUserCanFindProductByName(){
+
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
+        userRegisterRequest.setUsername("Osundu");
+        userRegisterRequest.setPassword("password");
+        userRegisterRequest.setEmail("abojeedwin@gmail.com");
+        userRegisterRequest.setFirstName("Benjamin");
+        userRegisterRequest.setLastName("Jacob");
+        userRegisterRequest.setPhoneNumber("1234567890");
+
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setCity("Lagos");
+        addressRequest.setPostalCode("9410");
+        addressRequest.setCountry("Nigeria");
+        addressRequest.setStreetNumber("17");
+        addressRequest.setLgaName("Bariga");
+
+
+        UserRegisterResponse registerResponse = userServiceImpl.registerUser(userRegisterRequest,addressRequest);
+        assertEquals("Success",registerResponse.getStatus());
+        assertEquals("Osundu",registerResponse.getUsername());
+
+        Product foundProduct = userServiceImpl.findProduct("Yam");
+        assertEquals("Coco Yam", foundProduct.getDescription());
+        assertEquals(1000.0,foundProduct.getPrice());
+    }
+
+    @Test
+    public void testUserFindProductThatDoesNotExistException(){
+
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
+        userRegisterRequest.setUsername("Osundu");
+        userRegisterRequest.setPassword("password");
+        userRegisterRequest.setEmail("abojeedwin@gmail.com");
+        userRegisterRequest.setFirstName("Benjamin");
+        userRegisterRequest.setLastName("Jacob");
+        userRegisterRequest.setPhoneNumber("1234567890");
+
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setCity("Lagos");
+        addressRequest.setPostalCode("9410");
+        addressRequest.setCountry("Nigeria");
+        addressRequest.setStreetNumber("17");
+        addressRequest.setLgaName("Bariga");
+
+
+        UserRegisterResponse registerResponse = userServiceImpl.registerUser(userRegisterRequest,addressRequest);
+        assertEquals("Success",registerResponse.getStatus());
+        assertEquals("Osundu",registerResponse.getUsername());
+        assertThrows(NoProductFoundException.class,()->userServiceImpl.findProduct("Garri"));
+    }
+
+    @Test
+    public void testUserFindProductByCategory(){
+
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
+        userRegisterRequest.setUsername("Osundu");
+        userRegisterRequest.setPassword("password");
+        userRegisterRequest.setEmail("abojeedwin@gmail.com");
+        userRegisterRequest.setFirstName("Benjamin");
+        userRegisterRequest.setLastName("Jacob");
+        userRegisterRequest.setPhoneNumber("1234567890");
+
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setCity("Lagos");
+        addressRequest.setPostalCode("9410");
+        addressRequest.setCountry("Nigeria");
+        addressRequest.setStreetNumber("17");
+        addressRequest.setLgaName("Bariga");
+
+
+        UserRegisterResponse registerResponse = userServiceImpl.registerUser(userRegisterRequest,addressRequest);
+        assertEquals("Success",registerResponse.getStatus());
+        assertEquals("Osundu",registerResponse.getUsername());
+
+       List<Product> foundProduct = userServiceImpl.findProductsByCategoryName("Food Stuff");
+        assertEquals("Yam", foundProduct.get(0).getName());
+        assertEquals(2,foundProduct.size());
+
     }
 
 

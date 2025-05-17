@@ -1,6 +1,7 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.*;
 import com.BNKBankApp.data.repository.AddressRepo;
+import com.BNKBankApp.data.repository.ProductRepo;
 import com.BNKBankApp.data.repository.UserRepo;
 import com.BNKBankApp.dto.request.*;
 import com.BNKBankApp.dto.resonse.LoginResponse;
@@ -29,6 +30,10 @@ public class UserServiceImpl implements UserService {
     private static HashPassword hashPassword;
     @Autowired
     private Jwt jwtService;
+    @Autowired
+    private ProductRepo productRepo;
+    @Autowired
+    private CategoryServiceImpl categoryServiceImpl;
 
     @Override
     public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest) {
@@ -77,12 +82,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Product findProduct(String productName) {
-        return null;
-    }
+        Product foundProduct = productRepo.findProductByName(productName);
+        if(foundProduct == null){throw new NoProductFoundException("Product Not Found");}return foundProduct;}
 
     @Override
     public List<Product> findProductsByCategoryName(String category) {
-        return List.of();
+        Category foundCategory = categoryServiceImpl.findByName(category);
+        List<Product> product = productRepo.findByCategoryId(foundCategory.getId());
+        return product;
     }
 
     @Override

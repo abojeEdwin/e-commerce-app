@@ -82,20 +82,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void removeProductByName(String productName) {
         Product foundProduct = findProduct(productName);
-        if(foundProduct == null){
-            throw new NoProductFoundException("Product Does Not Exist");
-        }
-        productRepo.delete(foundProduct);
-    }
+        if(foundProduct == null){throw new NoProductFoundException("Product Does Not Exist");}productRepo.delete(foundProduct);}
 
     @Override
     public Product findProduct(String productName) {
         Product foundProduct = productRepo.findProductByName(productName);
-        if (foundProduct == null) {
-            throw new NoProductFoundException("No Product Found");
-        }
-        return foundProduct;
-    }
+        if (foundProduct == null) {throw new NoProductFoundException("No Product Found");}return foundProduct;}
 
     @Override
     public List<Product> findAllProducts() {

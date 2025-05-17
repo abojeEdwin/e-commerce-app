@@ -41,22 +41,22 @@ class AdminServiceImplTest {
 
     @Autowired
     private InventoryServiceImpl inventoryServiceImpl;
-
-    @BeforeEach
-    void setUp() {
-        adminServiceImpl.deleteAll();
-        categoryServiceImpl.deleteAll();
-        productServiceImpl.deleteAllProducts();
-        inventoryServiceImpl.deleteAllInventory();
-    }
-
-    @AfterEach
-    void tearDown(){
-        adminServiceImpl.deleteAll();
-        categoryServiceImpl.deleteAll();
-        productServiceImpl.deleteAllProducts();
-        inventoryServiceImpl.deleteAllInventory();
-    }
+//
+//    @BeforeEach
+//    void setUp() {
+//        adminServiceImpl.deleteAll();
+//        categoryServiceImpl.deleteAll();
+//        productServiceImpl.deleteAllProducts();
+//        inventoryServiceImpl.deleteAllInventory();
+//    }
+//
+//    @AfterEach
+//    void tearDown(){
+//        adminServiceImpl.deleteAll();
+//        categoryServiceImpl.deleteAll();
+//        productServiceImpl.deleteAllProducts();
+//        inventoryServiceImpl.deleteAllInventory();
+//    }
 
     @Test
     public void testAdminCanRegister(){
