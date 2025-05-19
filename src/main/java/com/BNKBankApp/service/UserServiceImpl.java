@@ -1,6 +1,7 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.*;
 import com.BNKBankApp.data.repository.AddressRepo;
+import com.BNKBankApp.data.repository.CartRepo;
 import com.BNKBankApp.data.repository.ProductRepo;
 import com.BNKBankApp.data.repository.UserRepo;
 import com.BNKBankApp.dto.request.*;
@@ -11,6 +12,8 @@ import com.BNKBankApp.exception.*;
 import com.BNKBankApp.util.HashPassword;
 import com.BNKBankApp.util.Jwt;
 import com.BNKBankApp.util.VerifyEmail;
+import lombok.AllArgsConstructor;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.Optional;
 
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -27,13 +31,19 @@ public class UserServiceImpl implements UserService {
     private AddressRepo addressRepo;
     @Autowired
     private VerifyEmail verifyEmail;
+
     private static HashPassword hashPassword;
     @Autowired
     private Jwt jwtService;
     @Autowired
     private ProductRepo productRepo;
+
     @Autowired
     private CategoryServiceImpl categoryServiceImpl;
+
+    @Autowired
+    private CheckOutServiceImpl checkOutServiceImpl;
+
 
     @Override
     public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest) {
@@ -59,7 +69,9 @@ public class UserServiceImpl implements UserService {
         address.setLgaName(addressRequest.getLgaName());
         address.setStreetName(addressRequest.getStreetName());
         address.setStreetNumber(addressRequest.getStreetNumber());
-        addressRepo.save(address);
+        Address savedAddress = addressRepo.save(address);
+        user.setAddressId(savedAddress.getId());
+        userRepo.save(savedUser);
 
         UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
         userRegisterResponse.setUsername(savedUser.getUsername());
@@ -93,8 +105,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Cart addProductToCart(List<AddToCartRequest> addToCartRequests) {
-        return null;
+    public Cart addProductToCart(List<AddToCartRequest> addToCartRequests, String userId) {
+        return checkOutServiceImpl.addToCart(addToCartRequests,userId);
     }
 
     @Override

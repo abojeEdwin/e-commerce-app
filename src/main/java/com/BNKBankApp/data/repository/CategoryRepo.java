@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 public interface CategoryRepo extends MongoRepository<Category, String> {
     Category findByName(String name);
     long count();
-
 }

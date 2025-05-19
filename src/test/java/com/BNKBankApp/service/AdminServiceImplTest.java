@@ -124,7 +124,7 @@ class AdminServiceImplTest {
         CreateCategoryRequest createdCategoryRequest = new CreateCategoryRequest();
         createdCategoryRequest.setName("Electric Appliances");
         createdCategoryRequest.setDescription("Electric Appliances Category");
-        CreatedCategoryResponse  response = adminServiceImpl.createCategory(createdCategoryRequest);
+        CreatedCategoryResponse response = adminServiceImpl.createCategory(createdCategoryRequest);
 
         CreateCategoryRequest createdCategoryRequest2 = new CreateCategoryRequest();
         createdCategoryRequest2.setName("Food Stuff");
@@ -146,7 +146,6 @@ class AdminServiceImplTest {
         addProductRequest2.setPrice(1200.0);
         addProductRequest2.setQuantity(10);
         adminServiceImpl.addProduct(addProductRequest2);
-
 
         assertEquals(2,productServiceImpl.count());
     }

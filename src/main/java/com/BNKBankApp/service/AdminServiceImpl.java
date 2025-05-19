@@ -29,7 +29,6 @@ public class AdminServiceImpl implements AdminService {
     private VerifyEmail verifyEmail;
     @Autowired
     private CategoryRepo categoryRepo;
-
     @Autowired
     private CategoryService categoryService;
     @Autowired

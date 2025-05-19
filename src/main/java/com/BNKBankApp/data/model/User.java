@@ -24,6 +24,6 @@ public class User {
     @Indexed(unique = true)
     private String email;
     private String phoneNumber;
-    private Address address;
+    private String addressId;
     private Role role;
 }

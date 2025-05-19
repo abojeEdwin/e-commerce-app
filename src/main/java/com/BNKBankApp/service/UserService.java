@@ -6,16 +6,16 @@ import com.BNKBankApp.dto.request.*;
 import com.BNKBankApp.dto.resonse.LoginResponse;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-
 
 public interface UserService {
     UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest);
     LoginResponse loginUser(LoginRequest loginRequest);
     Product findProduct(String productName);
     List<Product> findProductsByCategoryName(String category);
-    Cart addProductToCart(List<AddToCartRequest> addToCartRequests);
+    Cart addProductToCart(List<AddToCartRequest> addToCartRequests,String userId);
     User findUserById(String userId);
     List <Cart> removeProductFromCartByProductName(String productName);
     ProductReviewResponse productReview(ProductReviewRequest productReviewRequest);
