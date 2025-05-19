@@ -7,7 +7,6 @@ import com.BNKBankApp.exception.NoProductFoundException;
 import com.BNKBankApp.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class CheckOutServiceImpl implements CheckOutService {
         this.cartServiceImpl = cartServiceImpl;
     }
 
-
    @Override
     public Cart addToCart(List<AddToCartRequest> addToCartRequest, String userId) {
         User foundUser = userRepo.findUserById(userId);
@@ -46,7 +44,9 @@ public class CheckOutServiceImpl implements CheckOutService {
     @Override
     public Order checkOut(String userId) {
         Cart cart = cartServiceImpl.findCartByUserId(userId);
+        if(cart == null){throw new UserNotFoundException("User with Id " + userId + " not found");}
         User foundUser = userRepo.findUserById(userId);
+        if(foundUser == null) {throw new UserNotFoundException("User with Id " + userId + " not found");}
 
         Order order = new Order();
         order.setOrderDate(cart.getCreatedAt());
@@ -58,6 +58,7 @@ public class CheckOutServiceImpl implements CheckOutService {
         order.setUserId(userId);
         Order savedOrder = orderServiceImpl.saveOrder(order);
 
+
         OrderHistory orderHistory = new OrderHistory();
         orderHistory.setOrderId(savedOrder.getId());
         orderHistory.setUserId(foundUser.getId());
@@ -66,10 +67,6 @@ public class CheckOutServiceImpl implements CheckOutService {
             orderItem.setOrderId(savedOrder.getId());
             orderItem.setCart(cart);
         }
-//        Cart savedCart = cartRepo.save(cart);
-//        savedOrder.setCartId(savedCart.getId());
-//        cartRepo.save(savedCart);
-//        savedOrder.setOrderHistory(orderHistory);
        return orderServiceImpl.saveOrder(savedOrder);
     }
 }
