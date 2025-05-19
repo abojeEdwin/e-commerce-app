@@ -7,8 +7,6 @@ import com.BNKBankApp.exception.NoProductFoundException;
 import com.BNKBankApp.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,19 +14,14 @@ import java.util.List;
 public class CheckOutServiceImpl implements CheckOutService {
 
     private final CartServiceImpl cartServiceImpl;
-
     @Autowired
     private UserRepo userRepo;
-
     @Autowired
     OrderServiceImpl orderServiceImpl;
-
     @Autowired
     private OrderHistoryServiceImpl orderHistoryServiceImpl;
-
     @Autowired
     private CartRepo cartRepo;
-
     @Autowired
     public CheckOutServiceImpl(CartServiceImpl cartServiceImpl) {
         this.cartServiceImpl = cartServiceImpl;
