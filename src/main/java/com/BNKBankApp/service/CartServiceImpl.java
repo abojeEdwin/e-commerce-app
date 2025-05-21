@@ -57,19 +57,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void deleteAllCart() {
+        cartRepo.deleteAll();
     }
     @Override
     public List<Cart> removeProductFromCart(String productName) {
-//        Product foundProduct = productServiceImpl.findProduct(productName);
-//
-//        for(Cart cart : cartRepo.findAll()) {
-//            List<OrderItem> orderItemsToRemove = new ArrayList<>();
-//            System.out.println("Before removal : " + cart.getOrderItem());
-//
-//        }
-//        Cart foundCart = cartRepo.findByProductName(productName);
-//        if(foundCart == null){throw new NoProductFoundException("Product with name " + productName + " not found");}
-//        cartRepo.delete(foundCart);
+        Product foundProduct = productServiceImpl.findProduct(productName);
+
+        for(Cart cart : cartRepo.findAll()) {
+            List<OrderItem> orderItemsToRemove = new ArrayList<>();
+            System.out.println("Before removal : " + cart.getOrderItem());
+        }
         return List.of();
     }
 

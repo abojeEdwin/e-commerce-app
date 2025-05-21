@@ -7,9 +7,7 @@ import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
 import com.BNKBankApp.dto.request.CreateCategoryRequest;
 import com.BNKBankApp.dto.resonse.*;
-import com.BNKBankApp.exception.DuplicateEmailException;
-import com.BNKBankApp.exception.DuplicateUsernameException;
-import com.BNKBankApp.exception.InvalidEmailException;
+import com.BNKBankApp.exception.*;
 import com.BNKBankApp.util.VerifyEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,8 +85,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Product findProduct(String name) {
-        return null;
-    }
+        Product foundProduct = productServiceImpl.findProduct(name);
+        if(foundProduct == null) {throw new NoProductFoundException("Product Not Found");}return foundProduct;}
 
     @Override
     public List<Order> checkListOfOrders() {
@@ -100,28 +98,4 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
-    @Override
-    public Admin findByUsername(String username) {
-        return null;
-    }
-
-    @Override
-    public boolean existsByEmail(String email) {
-        return false;
-    }
-
-    @Override
-    public Admin findByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public boolean existsByUsername(String username) {
-        return false;
-    }
-
-    @Override
-    public void deleteAll() {
-        adminRepo.deleteAll();
-    }
 }

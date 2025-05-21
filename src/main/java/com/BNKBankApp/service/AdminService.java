@@ -21,9 +21,4 @@ public interface AdminService {
      Product findProduct(String name);
      List <Order> checkListOfOrders();
      ProcessOrderResponse processOrder(String orderId);
-    Admin findByUsername(String username);
-    boolean existsByEmail(String email);
-    Admin findByEmail(String email);
-    boolean existsByUsername(String username);
-    void deleteAll();
 }

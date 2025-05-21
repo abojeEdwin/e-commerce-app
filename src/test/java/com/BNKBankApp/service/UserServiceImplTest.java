@@ -429,6 +429,5 @@ class UserServiceImplTest {
         assertEquals(3,cartResponse.getOrderItem().size());
         Order checkOutOrder = checkOutServiceImpl.checkOut(registerResponse.getUserId());
         assertEquals(checkOutOrder.getOrderStatus(), OrderStatus.COMPLETED_USER);
-
     }
 }

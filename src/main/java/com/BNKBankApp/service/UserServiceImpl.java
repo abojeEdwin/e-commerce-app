@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
        LoginResponse loginResponse = new LoginResponse();
        loginResponse.setStatus("Success");
        loginResponse.setToken(token);
-       otpService.sendOTPEmail(loginRequest.getEmail(),"Login");
+       otpService.verifyOTPAndGenerateToken(loginRequest.getEmail(), loginRequest.getOtp());
        return new LoginResponse(loginResponse.getToken(),loginResponse.getStatus());
     }
 
