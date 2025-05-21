@@ -7,11 +7,10 @@ import com.BNKBankApp.exception.NoProductFoundException;
 import com.BNKBankApp.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -22,10 +21,8 @@ public class CartServiceImpl implements CartService {
     private UserRepo userRepo;
     @Autowired
     private CartRepo cartRepo;
-    @Autowired
-    private OrderHistoryServiceImpl orderHistoryServiceImpl;
-    @Autowired
-    private OrderServiceImpl orderServiceImpl;
+
+
 
 
 
@@ -63,6 +60,16 @@ public class CartServiceImpl implements CartService {
     }
     @Override
     public List<Cart> removeProductFromCart(String productName) {
+//        Product foundProduct = productServiceImpl.findProduct(productName);
+//
+//        for(Cart cart : cartRepo.findAll()) {
+//            List<OrderItem> orderItemsToRemove = new ArrayList<>();
+//            System.out.println("Before removal : " + cart.getOrderItem());
+//
+//        }
+//        Cart foundCart = cartRepo.findByProductName(productName);
+//        if(foundCart == null){throw new NoProductFoundException("Product with name " + productName + " not found");}
+//        cartRepo.delete(foundCart);
         return List.of();
     }
 

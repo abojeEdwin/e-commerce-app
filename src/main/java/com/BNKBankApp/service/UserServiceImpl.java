@@ -11,6 +11,7 @@ import com.BNKBankApp.dto.resonse.UserRegisterResponse;
 import com.BNKBankApp.exception.*;
 import com.BNKBankApp.util.HashPassword;
 import com.BNKBankApp.util.Jwt;
+import com.BNKBankApp.util.Otp;
 import com.BNKBankApp.util.VerifyEmail;
 import lombok.AllArgsConstructor;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
@@ -43,6 +44,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CheckOutServiceImpl checkOutServiceImpl;
+
+    @Autowired
+    Otp otpService;
 
 
     @Override
@@ -89,6 +93,7 @@ public class UserServiceImpl implements UserService {
        LoginResponse loginResponse = new LoginResponse();
        loginResponse.setStatus("Success");
        loginResponse.setToken(token);
+       otpService.sendOTPEmail(loginRequest.getEmail(),"Login");
        return new LoginResponse(loginResponse.getToken(),loginResponse.getStatus());
     }
 
