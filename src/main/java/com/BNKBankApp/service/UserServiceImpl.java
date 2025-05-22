@@ -47,6 +47,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     Otp otpService;
+    @Autowired
+    private CartServiceImpl cartServiceImpl;
 
 
     @Override
@@ -121,7 +123,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Cart> removeProductFromCartByProductName(String productName) {
-        return List.of();
+        return cartServiceImpl.removeProductFromCart(productName);
     }
 
     @Override

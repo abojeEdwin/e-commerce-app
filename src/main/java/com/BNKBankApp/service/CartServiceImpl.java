@@ -21,9 +21,8 @@ public class CartServiceImpl implements CartService {
     private UserRepo userRepo;
     @Autowired
     private CartRepo cartRepo;
-
-
-
+    @Autowired
+    private OrderItemServiceImpl orderItemServiceImpl;
 
 
     @Override
@@ -66,8 +65,19 @@ public class CartServiceImpl implements CartService {
         for(Cart cart : cartRepo.findAll()) {
             List<OrderItem> orderItemsToRemove = new ArrayList<>();
             System.out.println("Before removal : " + cart.getOrderItem());
+            for(OrderItem orderItem : cart.getOrderItem()) {
+                if(orderItem.getProductId().equals(foundProduct.getId())) {
+                    orderItemsToRemove.add(orderItem);
+                }
+            }
+            cart.getOrderItem().removeAll(orderItemsToRemove);
+            for(OrderItem orderItem : orderItemsToRemove) {
+                orderItemServiceImpl.deleteByProductId(orderItem.getProductId());
+            }
+            cartRepo.save(cart);
+            System.out.println("After removal : " + cart.getOrderItem());
         }
-        return List.of();
+        return cartRepo.findAll();
     }
 
     @Override
