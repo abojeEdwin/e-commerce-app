@@ -4,6 +4,8 @@ import com.BNKBankApp.data.model.Order;
 import com.BNKBankApp.data.model.User;
 import com.BNKBankApp.data.repository.OrderRepo;
 import com.BNKBankApp.dto.resonse.ProcessOrderResponse;
+import com.BNKBankApp.exception.InvalidIdException;
+import com.BNKBankApp.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findOrder(String orderId) {
-        return null;
+        return orderRepo.findById(orderId).get();
     }
 
     @Override
@@ -43,4 +45,14 @@ public class OrderServiceImpl implements OrderService {
     public ProcessOrderResponse processOrder(String orderId) {
         return null;
     }
+
+    @Override
+    public Order findOrderById(String orderId) {
+        if(orderId == null) {
+            throw new InvalidIdException("Id Is Null");
+        }
+        return orderRepo.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
+    }
+
+
 }

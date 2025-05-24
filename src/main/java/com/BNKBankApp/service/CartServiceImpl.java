@@ -4,6 +4,7 @@ import com.BNKBankApp.data.repository.CartRepo;
 import com.BNKBankApp.data.repository.UserRepo;
 import com.BNKBankApp.dto.request.AddToCartRequest;
 import com.BNKBankApp.exception.NoProductFoundException;
+import com.BNKBankApp.exception.OrderNotFoundException;
 import com.BNKBankApp.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,4 +86,12 @@ public class CartServiceImpl implements CartService {
         Cart foundCart = cartRepo.findByUserId(userId);
         return foundCart;
     }
+
+    @Override
+    public Order findOrderById(String orderId) {
+        return cartRepo.findByOrderId(orderId)
+                .orElseThrow(()-> new OrderNotFoundException("Order Not Found"));
+    }
+
+
 }

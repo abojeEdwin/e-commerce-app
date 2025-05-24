@@ -1,5 +1,6 @@
 package com.BNKBankApp.service;
 
+import com.BNKBankApp.data.model.Cart;
 import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.ProductReviewRequest;
@@ -17,6 +18,5 @@ public interface ProductService {
     Product findProduct(String productName);
     List<Product> findAllProducts();
     List<Product> findProductsByCategory(String category);
-    ProductReviewResponse addReview(ProductReviewRequest productReviewRequest);
     long count();
 }

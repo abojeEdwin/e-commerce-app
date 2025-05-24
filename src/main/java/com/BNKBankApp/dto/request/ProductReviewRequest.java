@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class ProductReviewRequest {
-    String productName;
-    String message;
+    private String productName;
+    private String message;
     private Rating rating;
-
+    private String userId;
 }

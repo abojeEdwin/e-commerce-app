@@ -49,6 +49,10 @@ public class UserServiceImpl implements UserService {
     Otp otpService;
     @Autowired
     private CartServiceImpl cartServiceImpl;
+    @Autowired
+    private ProductServiceImpl productServiceImpl;
+    @Autowired
+    private ReviewServiceImpl reviewServiceImpl;
 
 
     @Override
@@ -127,13 +131,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ProductReviewResponse productReview(ProductReviewRequest productReviewRequest) {
-        return null;
+    public ProductReviewResponse productReview(ProductReviewRequest productReviewRequest, String orderId, Cart cartResponse) {
+        return reviewServiceImpl.addReview(productReviewRequest,orderId, cartResponse);
     }
 
     @Override
     public Optional<User> findUserByUsername(String username) {
-        return Optional.empty();
+        return userRepo.findByUsername(username);
     }
 
     @Override

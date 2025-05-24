@@ -15,4 +15,5 @@ public interface OrderService {
     Order findOrder(String orderId);
     List<Order> checkListOfOrders();
     ProcessOrderResponse processOrder(String orderId);
+    Order findOrderById(String orderId);
 }

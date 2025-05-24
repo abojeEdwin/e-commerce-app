@@ -1,10 +1,8 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.*;
-import com.BNKBankApp.dto.request.AddToCartRequest;
-import com.BNKBankApp.dto.request.AddressRequest;
-import com.BNKBankApp.dto.request.LoginRequest;
-import com.BNKBankApp.dto.request.UserRegisterRequest;
+import com.BNKBankApp.dto.request.*;
 import com.BNKBankApp.dto.resonse.LoginResponse;
+import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
 import com.BNKBankApp.exception.*;
 import org.junit.jupiter.api.AfterEach;
@@ -484,6 +482,71 @@ class UserServiceImplTest {
         List<Cart> newCartList = userServiceImpl.removeProductFromCartByProductName("Grand pure soya oil");
         Cart firstCart = newCartList.get(0);
         assertEquals(2,firstCart.getOrderItem().size());
+
+    }
+
+    @Test
+    public void testUserCanAddProductReview(){
+        User user = new User();
+        user.setUsername("Osundu");
+        user.setPassword("password");
+        user.setFirstName("Benjamin");
+        user.setLastName("Jacob");
+        user.setPhoneNumber("1234567890");
+        user.setEmail("abojeedwin@gmail.com");
+
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
+        userRegisterRequest.setUsername(user.getUsername());
+        userRegisterRequest.setPassword(user.getPassword());
+        userRegisterRequest.setEmail(user.getEmail());
+        userRegisterRequest.setFirstName(user.getFirstName());
+        userRegisterRequest.setLastName(user.getLastName());
+        userRegisterRequest.setPhoneNumber(user.getPhoneNumber());
+        userRegisterRequest.setId(user.getId());
+
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setCity("Lagos");
+        addressRequest.setPostalCode("9410");
+        addressRequest.setCountry("Nigeria");
+        addressRequest.setStreetNumber("17");
+        addressRequest.setLgaName("Bariga");
+
+        UserRegisterResponse registerResponse = userServiceImpl.registerUser(userRegisterRequest,addressRequest);
+        assertEquals("Success",registerResponse.getStatus());
+        assertEquals("Osundu",registerResponse.getUsername());
+
+        AddToCartRequest cartRequest1 = new AddToCartRequest();
+        cartRequest1.setProductName("Yam");
+        cartRequest1.setQuantity(1);
+        cartRequest1.setUserId(registerResponse.getUserId());
+
+        AddToCartRequest cartRequest2 = new AddToCartRequest();
+        cartRequest2.setProductName("Yam");
+        cartRequest2.setQuantity(100);
+        cartRequest2.setUserId(registerResponse.getUserId());
+
+        AddToCartRequest cartRequest3 = new AddToCartRequest();
+        cartRequest3.setProductName("Grand pure soya oil");
+        cartRequest3.setQuantity(1);
+        cartRequest3.setUserId(registerResponse.getUserId());
+
+        List<AddToCartRequest> cartRequests = List.of(cartRequest1,cartRequest2,cartRequest3);
+        Cart cartResponse = userServiceImpl.addProductToCart(cartRequests, registerResponse.getUserId());
+        assertEquals(3,cartResponse.getOrderItem().size());
+        Order checkOutOrder = checkOutServiceImpl.checkOut(registerResponse.getUserId());
+        assertEquals(checkOutOrder.getOrderStatus(), OrderStatus.COMPLETED_USER);
+
+        List<Cart> newCartList = userServiceImpl.removeProductFromCartByProductName("Grand pure soya oil");
+        Cart firstCart = newCartList.get(0);
+        assertEquals(2,firstCart.getOrderItem().size());
+        ProductReviewRequest productReviewRequest = new ProductReviewRequest();
+        productReviewRequest.setProductName("Yam");
+        productReviewRequest.setUserId(registerResponse.getUserId());
+        productReviewRequest.setMessage("Nice Product");
+        productReviewRequest.setRating(Rating.FOUR);
+
+        ProductReviewResponse productResponse = userServiceImpl.productReview(productReviewRequest,checkOutOrder.getId(),firstCart);
+        assertEquals("Review successfully added",productResponse.getMessage());
 
     }
 }

@@ -18,7 +18,7 @@ public interface UserService {
     Cart addProductToCart(List<AddToCartRequest> addToCartRequests,String userId);
     User findUserById(String userId);
     List <Cart> removeProductFromCartByProductName(String productName);
-    ProductReviewResponse productReview(ProductReviewRequest productReviewRequest);
+    ProductReviewResponse productReview(ProductReviewRequest productReviewRequest,String orderId, Cart cartResponse);
     Optional<User> findUserByUsername(String username);
     void deleteAll();
     long count();
