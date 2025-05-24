@@ -10,7 +10,6 @@ import com.BNKBankApp.exception.ExceededNumberOfReviewPerOrderException;
 import com.BNKBankApp.exception.NoProductFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -27,7 +26,6 @@ public class ReviewServiceImpl implements ReviewService {
     private ProductServiceImpl productServiceImpl;
     @Autowired
     private OrderRepo orderRepo;
-
     @Autowired
     OrderHistoryRepo orderHistoryRepo;
     @Autowired

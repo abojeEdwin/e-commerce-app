@@ -8,8 +8,9 @@ import com.BNKBankApp.exception.InvalidIdException;
 import com.BNKBankApp.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -29,11 +30,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteAllOrders() {
 
-    }
-
-    @Override
-    public Order findOrder(String orderId) {
-        return orderRepo.findById(orderId).get();
     }
 
     @Override

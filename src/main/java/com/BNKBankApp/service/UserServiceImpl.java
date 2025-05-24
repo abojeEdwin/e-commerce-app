@@ -1,7 +1,6 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.*;
 import com.BNKBankApp.data.repository.AddressRepo;
-import com.BNKBankApp.data.repository.CartRepo;
 import com.BNKBankApp.data.repository.ProductRepo;
 import com.BNKBankApp.data.repository.UserRepo;
 import com.BNKBankApp.dto.request.*;
@@ -9,12 +8,8 @@ import com.BNKBankApp.dto.resonse.LoginResponse;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
 import com.BNKBankApp.exception.*;
-import com.BNKBankApp.util.HashPassword;
-import com.BNKBankApp.util.Jwt;
-import com.BNKBankApp.util.Otp;
-import com.BNKBankApp.util.VerifyEmail;
+import com.BNKBankApp.util.*;
 import lombok.AllArgsConstructor;
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -32,19 +27,15 @@ public class UserServiceImpl implements UserService {
     private AddressRepo addressRepo;
     @Autowired
     private VerifyEmail verifyEmail;
-
     private static HashPassword hashPassword;
     @Autowired
     private Jwt jwtService;
     @Autowired
     private ProductRepo productRepo;
-
     @Autowired
     private CategoryServiceImpl categoryServiceImpl;
-
     @Autowired
     private CheckOutServiceImpl checkOutServiceImpl;
-
     @Autowired
     Otp otpService;
     @Autowired
@@ -53,14 +44,13 @@ public class UserServiceImpl implements UserService {
     private ProductServiceImpl productServiceImpl;
     @Autowired
     private ReviewServiceImpl reviewServiceImpl;
+    @Autowired
+    VerifyUser verifyUser;
 
 
     @Override
     public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest) {
-        if(userRepo.existsByEmail(userRegisterRequest.getEmail())){throw new EmailAlreadyExistException("Email already exist");}
-        if(!verifyEmail.isVerifiedEmail(userRegisterRequest.getEmail())){throw new InvalidEmailException("Invalid email, please try again.");}
-        if(userRepo.existsByUsername(userRegisterRequest.getUsername())){throw new DuplicateUsernameException("Username already exist");}
-
+        verifyUser.registerUser(userRegisterRequest, addressRequest);
         User user = new User();
         String hashedPassword = HashPassword.hashPassword(userRegisterRequest.getPassword());
         user.setEmail(userRegisterRequest.getEmail());
@@ -116,24 +106,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Cart addProductToCart(List<AddToCartRequest> addToCartRequests, String userId) {
-        return checkOutServiceImpl.addToCart(addToCartRequests,userId);
-    }
+    public Cart addProductToCart(List<AddToCartRequest> addToCartRequests, String userId) {return checkOutServiceImpl.addToCart(addToCartRequests,userId);}
 
     @Override
-    public User findUserById(String userId) {
-        return userRepo.findById(userId).orElse(null);
-    }
+    public User findUserById(String userId) {return userRepo.findById(userId).orElse(null);}
 
     @Override
-    public List<Cart> removeProductFromCartByProductName(String productName) {
-        return cartServiceImpl.removeProductFromCart(productName);
-    }
+    public List<Cart> removeProductFromCartByProductName(String productName) {return cartServiceImpl.removeProductFromCart(productName);}
 
     @Override
-    public ProductReviewResponse productReview(ProductReviewRequest productReviewRequest, String orderId, Cart cartResponse) {
-        return reviewServiceImpl.addReview(productReviewRequest,orderId, cartResponse);
-    }
+    public ProductReviewResponse productReview(ProductReviewRequest productReviewRequest, String orderId, Cart cartResponse) {return reviewServiceImpl.addReview(productReviewRequest,orderId, cartResponse);}
 
     @Override
     public Optional<User> findUserByUsername(String username) {
