@@ -21,6 +21,4 @@ public class VerifyUser {
         if(!verifyEmail.isVerifiedEmail(userRegisterRequest.getEmail())){throw new InvalidEmailException("Invalid email, please try again.");}
         if(userRepo.existsByUsername(userRegisterRequest.getUsername())){throw new DuplicateUsernameException("Username already exist");}
     }
-
-
 }

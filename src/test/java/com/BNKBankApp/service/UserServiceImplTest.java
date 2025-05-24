@@ -289,7 +289,7 @@ class UserServiceImplTest {
         assertEquals("Success",registerResponse.getStatus());
         assertEquals("Osundu",registerResponse.getUsername());
 
-       List<Product> foundProduct = userServiceImpl.findProductsByCategoryName("Food Stuff");
+       List<Product> foundProduct = userServiceImpl.findProductsByCategoryName("Food");
         assertEquals("Yam", foundProduct.get(0).getName());
         assertEquals(2,foundProduct.size());
     }
