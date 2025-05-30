@@ -1,10 +1,16 @@
 package com.BNKBankApp.dto.request;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 public class CreateCategoryRequest {
 
+    @NotBlank(message = "This field cannot be blank")
     private String name;
+
+    @NotBlank(message = "This field cannot be blank")
     private String description;
 }

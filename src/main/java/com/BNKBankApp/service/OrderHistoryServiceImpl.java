@@ -34,6 +34,6 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 
     @Override
     public List<OrderHistory> findAllOrderHistory() {
-        return List.of();
+        return orderHistoryRepo.findAll();
     }
 }

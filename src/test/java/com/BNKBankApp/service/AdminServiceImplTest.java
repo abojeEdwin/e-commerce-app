@@ -1,17 +1,11 @@
 package com.BNKBankApp.service;
-import com.BNKBankApp.data.model.Admin;
-import com.BNKBankApp.data.model.Inventory;
-import com.BNKBankApp.data.model.Product;
-import com.BNKBankApp.data.model.Role;
+import com.BNKBankApp.data.model.*;
 import com.BNKBankApp.data.repository.AdminRepo;
 import com.BNKBankApp.data.repository.CategoryRepo;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
 import com.BNKBankApp.dto.request.CreateCategoryRequest;
-import com.BNKBankApp.dto.resonse.AddedProductResponse;
-import com.BNKBankApp.dto.resonse.AdminRegisterResponse;
-import com.BNKBankApp.dto.resonse.AllProductsInACategoryResponse;
-import com.BNKBankApp.dto.resonse.CreatedCategoryResponse;
+import com.BNKBankApp.dto.resonse.*;
 import com.BNKBankApp.exception.DuplicateEmailException;
 import com.BNKBankApp.exception.DuplicateUsernameException;
 import com.BNKBankApp.exception.InvalidEmailException;
@@ -325,5 +319,12 @@ class AdminServiceImplTest {
         Product foundProduct = adminServiceImpl.findProduct("Yam");
         assertEquals(1000.0,foundProduct.getPrice());
     }
+
+    @Test
+    public void testAdminCanCheckListOfOrders(){
+        List <Order> orderList = adminServiceImpl.checkListOfOrders();
+        assertEquals(orderList.size(),38);
+    }
+
 
 }

@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest) {
-        verifyUser.registerUser(userRegisterRequest, addressRequest);
+    public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest) {
+        verifyUser.registerUser(userRegisterRequest);
         User user = new User();
         String hashedPassword = HashPassword.hashPassword(userRegisterRequest.getPassword());
         user.setEmail(userRegisterRequest.getEmail());
@@ -62,13 +62,13 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepo.save(user);
 
         Address address = new Address();
-        address.setPostalCode(addressRequest.getPostalCode());
-        address.setCity(addressRequest.getCity());
-        address.setCountry(addressRequest.getCountry());
+        address.setPostalCode(userRegisterRequest.getPostalCode());
+        address.setCity(userRegisterRequest.getCity());
+        address.setCountry(userRegisterRequest.getCountry());
         address.setUserId(user.getId());
-        address.setLgaName(addressRequest.getLgaName());
-        address.setStreetName(addressRequest.getStreetName());
-        address.setStreetNumber(addressRequest.getStreetNumber());
+        address.setLgaName(userRegisterRequest.getLgaName());
+        address.setStreetName(userRegisterRequest.getStreetName());
+        address.setStreetNumber(userRegisterRequest.getStreetNumber());
         Address savedAddress = addressRepo.save(address);
         user.setAddressId(savedAddress.getId());
         userRepo.save(savedUser);
@@ -94,19 +94,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Product findProduct(String productName) {
-        Product foundProduct = productRepo.findProductByName(productName);
+    public Product findProduct(FindProductRequest findProductRequest) {
+        Product foundProduct = productRepo.findProductByName(findProductRequest.getProductName());
         if(foundProduct == null){throw new NoProductFoundException("Product Not Found");}return foundProduct;}
 
     @Override
-    public List<Product> findProductsByCategoryName(String category) {
-        Category foundCategory = categoryServiceImpl.findByName(category);
+    public List<Product> findProductsByCategoryName(FindCategoryRequest findCategoryRequest) {
+        Category foundCategory = categoryServiceImpl.findByName(findCategoryRequest.getCategoryName());
+        if(foundCategory.getName() == null){throw new NoProductFoundException("No Product Found");}
         List<Product> product = productRepo.findByCategoryId(foundCategory.getId());
         return product;
     }
 
     @Override
-    public Cart addProductToCart(List<AddToCartRequest> addToCartRequests, String userId) {return checkOutServiceImpl.addToCart(addToCartRequests,userId);}
+    public Cart addProductToCart(List<AddToCartRequest> addToCartRequests) {return checkOutServiceImpl.addToCart(addToCartRequests);}
 
     @Override
     public User findUserById(String userId) {return userRepo.findById(userId).orElse(null);}

@@ -27,11 +27,11 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public Cart addToCart(List<AddToCartRequest> addToCartRequest, String userId) {
+    public Cart addToCart(List<AddToCartRequest> addToCartRequest) {
 
         double total = 0.0;
-        User foundUser = userRepo.findUserById(userId);
-        if(foundUser == null) {throw new UserNotFoundException("User with Id " + userId + " not found");}
+        User foundUser = userRepo.findUserById(addToCartRequest.get(0).getUserId());
+        if(foundUser == null) {throw new UserNotFoundException("User not found");}
 
 
         List<OrderItem> orderItems = new ArrayList<>();
@@ -51,7 +51,7 @@ public class CartServiceImpl implements CartService {
         cart.setOrderItem(orderItems);
         cart.setTotalPrice(total);
         cart.setCreatedAt(LocalDateTime.now());
-        cart.setUserId(userId);
+        cart.setUserId(addToCartRequest.get(0).getUserId());
         return cartRepo.save(cart);
     }
 

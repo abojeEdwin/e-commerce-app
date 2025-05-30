@@ -7,7 +7,7 @@ import com.BNKBankApp.dto.request.AddToCartRequest;
 import java.util.List;
 
 public interface CheckOutService {
-    Cart addToCart(List<AddToCartRequest> addToCartRequest, String userId);
+    Cart addToCart(List<AddToCartRequest> addToCartRequest);
     Order checkOut(String userId);
 
 }

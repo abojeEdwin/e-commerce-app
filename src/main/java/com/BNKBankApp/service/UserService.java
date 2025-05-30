@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest, AddressRequest addressRequest);
+    UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest);
     LoginResponse loginUser(LoginRequest loginRequest);
-    Product findProduct(String productName);
-    List<Product> findProductsByCategoryName(String category);
-    Cart addProductToCart(List<AddToCartRequest> addToCartRequests,String userId);
+    Product findProduct(FindProductRequest findProductRequest);
+    List<Product> findProductsByCategoryName(FindCategoryRequest findCategoryRequest);
+    Cart addProductToCart(List<AddToCartRequest> addToCartRequests);
     User findUserById(String userId);
     List <Cart> removeProductFromCartByProductName(String productName);
     ProductReviewResponse productReview(ProductReviewRequest productReviewRequest,String orderId, Cart cartResponse);

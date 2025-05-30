@@ -1,6 +1,7 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.Cart;
 import com.BNKBankApp.data.model.Order;
+import com.BNKBankApp.data.model.OrderStatus;
 import com.BNKBankApp.data.model.User;
 import com.BNKBankApp.data.repository.OrderRepo;
 import com.BNKBankApp.dto.resonse.ProcessOrderResponse;
@@ -8,6 +9,8 @@ import com.BNKBankApp.exception.InvalidIdException;
 import com.BNKBankApp.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -29,17 +32,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteAllOrders() {
-
+        orderRepo.deleteAll();
     }
 
     @Override
     public List<Order> checkListOfOrders() {
-        return List.of();
+        return orderRepo.findAll();
     }
 
     @Override
     public ProcessOrderResponse processOrder(String orderId) {
-        return null;
+        Order order = orderRepo.findOrderById(orderId);
+        System.out.println(order.getOrderStatus());
+        order.setOrderStatus(OrderStatus.COMPLETED_ADMIN);
+
+        ProcessOrderResponse processOrderResponse = new ProcessOrderResponse();
+        processOrderResponse.setMessage("Order processing to user");
+        processOrderResponse.setDateProcessed(LocalDateTime.now());
+        return processOrderResponse;
     }
 
     @Override

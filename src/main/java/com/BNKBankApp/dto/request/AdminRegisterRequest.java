@@ -1,12 +1,23 @@
 package com.BNKBankApp.dto.request;
 import com.BNKBankApp.data.model.Role;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 public class AdminRegisterRequest {
+
+    @NotBlank(message = "This field cannot be blank")
     private String username;
+
+    @NotBlank(message = "This field cannot be blank")
     private String password;
+
+    @NotBlank(message = "This field cannot be blank")
     private String email;
+
+    @NotBlank(message = "This field cannot be blank")
     private Role role;
 }

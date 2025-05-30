@@ -1,11 +1,21 @@
 package com.BNKBankApp.dto.request;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+
+@Getter
+@Setter
 public class LoginRequest {
 
+
+    @NotBlank(message = "This field cannot be blank")
     private String email;
+
+    @NotBlank(message = "This field cannot be blank")
     private String password;
+
+    @NotBlank(message = "This field cannot be blank")
     private String otp;
 
 }

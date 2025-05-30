@@ -29,10 +29,10 @@ public class CheckOutServiceImpl implements CheckOutService {
     }
 
    @Override
-    public Cart addToCart(List<AddToCartRequest> addToCartRequest, String userId) {
-        User foundUser = userRepo.findUserById(userId);
-        if(foundUser == null) {throw new UserNotFoundException("User with Id " + userId + " not found");}
-        return cartServiceImpl.addToCart(addToCartRequest, userId);
+    public Cart addToCart(List<AddToCartRequest> addToCartRequest) {
+        User foundUser = userRepo.findUserById(addToCartRequest.get(0).getUserId());
+        if(foundUser == null) {throw new UserNotFoundException("User not found");}
+        return cartServiceImpl.addToCart(addToCartRequest);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CheckOutServiceImpl implements CheckOutService {
 
         Order order = new Order();
         order.setOrderDate(cart.getCreatedAt());
-        order.setOrderStatus(OrderStatus.COMPLETED_USER);
+        order.setOrderStatus(OrderStatus.COMPLETED_ADMIN);
         order.setBillingAddressId(foundUser.getAddressId());
         order.setTotalPrice(cart.getTotalPrice());
         order.setShippingAddressId(foundUser.getAddressId());

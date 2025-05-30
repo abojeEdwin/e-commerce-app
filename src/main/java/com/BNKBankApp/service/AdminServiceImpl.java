@@ -33,6 +33,8 @@ public class AdminServiceImpl implements AdminService {
     private ProductServiceImpl productServiceImpl;
     @Autowired
     private InventoryServiceImpl inventoryServiceImpl;
+    @Autowired
+    private OrderServiceImpl orderServiceImpl;
 
     @Override
     public AdminRegisterResponse registerAdmin(AdminRegisterRequest registerAdminRequest) {
@@ -90,12 +92,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Order> checkListOfOrders() {
-        return List.of();
+        return orderServiceImpl.checkListOfOrders();
     }
 
     @Override
     public ProcessOrderResponse processOrder(String orderId) {
-        return null;
+        return orderServiceImpl.processOrder(orderId);
     }
 
 }

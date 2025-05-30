@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface CartService {
-    Cart addToCart(List<AddToCartRequest> addToCartRequest,String userId);
+    Cart addToCart(List<AddToCartRequest> addToCartRequest);
     void deleteAllCart();
     List<Cart> removeProductFromCart(String productName);
     Cart findCartByUserId(String userId);
