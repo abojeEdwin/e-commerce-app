@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @PostMapping("/addProductReview")
-    public ResponseEntity<ProductReviewResponse> addProductReview(@RequestBody @Valid ProductReviewRequest productReviewRequest, String userId, Cart cartResponse){
-        return ResponseEntity.ok(userServiceImpl.productReview(productReviewRequest,userId,cartResponse));
+    public ResponseEntity<ProductReviewResponse> addProductReview(@RequestBody @Valid ProductReviewRequest productReviewRequest, String userId, String cartResponseId){
+        return ResponseEntity.ok(userServiceImpl.productReview(productReviewRequest,userId,cartResponseId));
     }
 }

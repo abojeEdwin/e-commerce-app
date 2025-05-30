@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
     public List<Cart> removeProductFromCartByProductName(FindProductRequest findProductRequest) {return cartServiceImpl.removeProductFromCart(findProductRequest.getProductName());}
 
     @Override
-    public ProductReviewResponse productReview(ProductReviewRequest productReviewRequest, String orderId, Cart cartResponse) {return reviewServiceImpl.addReview(productReviewRequest,orderId, cartResponse);}
+    public ProductReviewResponse productReview(ProductReviewRequest productReviewRequest, String orderId, String cartResponseId) {return reviewServiceImpl.addReview(productReviewRequest,orderId, cartResponseId);}
 
     @Override
     public Optional<User> findUserByUsername(FindUserRequest findUserRequest) {

@@ -38,13 +38,13 @@ public class CheckOutServiceImpl implements CheckOutService {
     @Override
     public Order checkOut(String userId) {
         Cart cart = cartServiceImpl.findCartByUserId(userId);
-        if(cart == null){throw new UserNotFoundException("User with Id " + userId + " not found");}
+        if(cart == null){throw new UserNotFoundException("User not found");}
         User foundUser = userRepo.findUserById(userId);
         if(foundUser == null) {throw new UserNotFoundException("User with Id " + userId + " not found");}
 
         Order order = new Order();
         order.setOrderDate(cart.getCreatedAt());
-        order.setOrderStatus(OrderStatus.COMPLETED_ADMIN);
+        order.setOrderStatus(OrderStatus.COMPLETED_USER);
         order.setBillingAddressId(foundUser.getAddressId());
         order.setTotalPrice(cart.getTotalPrice());
         order.setShippingAddressId(foundUser.getAddressId());

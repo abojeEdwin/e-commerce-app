@@ -1,13 +1,11 @@
 package com.BNKBankApp.service;
 import com.BNKBankApp.data.model.*;
-import com.BNKBankApp.data.repository.OrderHistoryRepo;
-import com.BNKBankApp.data.repository.OrderRepo;
-import com.BNKBankApp.data.repository.ProductRepo;
-import com.BNKBankApp.data.repository.ReviewRepo;
+import com.BNKBankApp.data.repository.*;
 import com.BNKBankApp.dto.request.ProductReviewRequest;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.exception.ExceededNumberOfReviewPerOrderException;
 import com.BNKBankApp.exception.NoProductFoundException;
+import com.BNKBankApp.exception.NoSuchCartFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -30,12 +28,17 @@ public class ReviewServiceImpl implements ReviewService {
     OrderHistoryRepo orderHistoryRepo;
     @Autowired
     private OrderServiceImpl orderServiceImpl;
+    @Autowired
+    private CartRepo cartRepo;
 
 
     @Override
-    public ProductReviewResponse addReview(ProductReviewRequest productReviewRequest, String orderId, Cart cartResponse) {
+    public ProductReviewResponse addReview(ProductReviewRequest productReviewRequest, String orderId, String cartResponseId) {
         Product product = productServiceImpl.findProduct(productReviewRequest.getProductName());
         Order order = orderServiceImpl.findOrderById(orderId);
+        Cart cartResponse = cartRepo.findCartById(cartResponseId);
+
+        if(cartResponse == null) {throw new NoSuchCartFoundException("No cart found");}
         OrderItem neededProduct = null;
 
         for(OrderItem orderItem : cartResponse.getOrderItem()){

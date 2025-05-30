@@ -6,6 +6,6 @@ import com.BNKBankApp.dto.request.ProductReviewRequest;
 import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 
 public interface ReviewService {
-    ProductReviewResponse addReview(ProductReviewRequest productReviewRequest, String orderId, Cart cartResponse);
+    ProductReviewResponse addReview(ProductReviewRequest productReviewRequest, String orderId, String cartResponseId);
     void deleteReview();
 }
