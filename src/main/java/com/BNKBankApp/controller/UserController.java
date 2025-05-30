@@ -2,9 +2,11 @@ package com.BNKBankApp.controller;
 import com.BNKBankApp.data.model.Cart;
 import com.BNKBankApp.data.model.Category;
 import com.BNKBankApp.data.model.Product;
+import com.BNKBankApp.data.model.User;
 import com.BNKBankApp.dto.request.*;
 import com.BNKBankApp.dto.resonse.AddedProductResponse;
 import com.BNKBankApp.dto.resonse.LoginResponse;
+import com.BNKBankApp.dto.resonse.ProductReviewResponse;
 import com.BNKBankApp.dto.resonse.UserRegisterResponse;
 import com.BNKBankApp.service.UserServiceImpl;
 import com.BNKBankApp.util.Otp;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -58,5 +61,25 @@ public class UserController {
     @PostMapping("/addToCart")
     public ResponseEntity <Cart> addToCart(@RequestBody List<AddToCartRequest> addToCartRequest) {
         return ResponseEntity.ok(userServiceImpl.addProductToCart(addToCartRequest));
+    }
+
+    @PostMapping("/deleteProductFromCartByProductName")
+    public ResponseEntity<List<Cart>> removeProductFromCartByProductName(@RequestBody @Valid FindProductRequest findProductRequest){
+        return ResponseEntity.ok(userServiceImpl.removeProductFromCartByProductName(findProductRequest));
+    }
+
+    @GetMapping("/findUserByName")
+    public ResponseEntity<Optional<User>> findUserByUserName (@RequestBody @Valid  FindUserRequest findUserRequest){
+        return ResponseEntity.ok(userServiceImpl.findUserByUsername(findUserRequest));
+    }
+
+    @DeleteMapping("/removeProductFromCart")
+    public ResponseEntity<List<Cart>> removeProductFromCart(@RequestBody @Valid FindProductRequest findProductRequest){
+        return ResponseEntity.ok(userServiceImpl.removeProductFromCartByProductName(findProductRequest));
+    }
+
+    @PostMapping("/addProductReview")
+    public ResponseEntity<ProductReviewResponse> addProductReview(@RequestBody @Valid ProductReviewRequest productReviewRequest, String userId, Cart cartResponse){
+        return ResponseEntity.ok(userServiceImpl.productReview(productReviewRequest,userId,cartResponse));
     }
 }

@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
     private AddressRepo addressRepo;
     @Autowired
     private VerifyEmail verifyEmail;
-    private static HashPassword hashPassword;
     @Autowired
     private Jwt jwtService;
     @Autowired
@@ -113,14 +112,14 @@ public class UserServiceImpl implements UserService {
     public User findUserById(String userId) {return userRepo.findById(userId).orElse(null);}
 
     @Override
-    public List<Cart> removeProductFromCartByProductName(String productName) {return cartServiceImpl.removeProductFromCart(productName);}
+    public List<Cart> removeProductFromCartByProductName(FindProductRequest findProductRequest) {return cartServiceImpl.removeProductFromCart(findProductRequest.getProductName());}
 
     @Override
     public ProductReviewResponse productReview(ProductReviewRequest productReviewRequest, String orderId, Cart cartResponse) {return reviewServiceImpl.addReview(productReviewRequest,orderId, cartResponse);}
 
     @Override
-    public Optional<User> findUserByUsername(String username) {
-        return userRepo.findByUsername(username);
+    public Optional<User> findUserByUsername(FindUserRequest findUserRequest) {
+        return userRepo.findByUsername(findUserRequest.getUsername());
     }
 
     @Override

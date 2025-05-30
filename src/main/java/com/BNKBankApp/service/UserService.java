@@ -9,6 +9,7 @@ import com.BNKBankApp.dto.resonse.UserRegisterResponse;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface UserService {
     UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest);
     LoginResponse loginUser(LoginRequest loginRequest);
@@ -16,10 +17,9 @@ public interface UserService {
     List<Product> findProductsByCategoryName(FindCategoryRequest findCategoryRequest);
     Cart addProductToCart(List<AddToCartRequest> addToCartRequests);
     User findUserById(String userId);
-    List <Cart> removeProductFromCartByProductName(String productName);
+    List <Cart> removeProductFromCartByProductName(FindProductRequest findProductRequest);
     ProductReviewResponse productReview(ProductReviewRequest productReviewRequest,String orderId, Cart cartResponse);
-    Optional<User> findUserByUsername(String username);
+    Optional<User> findUserByUsername(FindUserRequest findUserRequest);
     void deleteAll();
     long count();
-
 }
