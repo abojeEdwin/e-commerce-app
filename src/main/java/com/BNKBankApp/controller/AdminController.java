@@ -1,5 +1,6 @@
 package com.BNKBankApp.controller;
 import com.BNKBankApp.data.model.Inventory;
+import com.BNKBankApp.data.model.Order;
 import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
@@ -8,6 +9,7 @@ import com.BNKBankApp.dto.request.FindProductRequest;
 import com.BNKBankApp.dto.resonse.AddedProductResponse;
 import com.BNKBankApp.dto.resonse.AdminRegisterResponse;
 import com.BNKBankApp.dto.resonse.CreatedCategoryResponse;
+import com.BNKBankApp.dto.resonse.ProcessOrderResponse;
 import com.BNKBankApp.service.AdminService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -54,5 +56,19 @@ public class AdminController {
     @GetMapping("/findProductByName")
     public ResponseEntity <Product> findProductByName(@RequestBody @Valid FindProductRequest findProductRequest){
         return ResponseEntity.ok(adminService.findProduct(findProductRequest));
+    }
+
+    @GetMapping("/findProductById")
+    public ResponseEntity <Inventory> findProductById(@RequestBody @Valid String Id){
+        return ResponseEntity.ok(adminService.findByProductId(Id));
+    }
+    @GetMapping("/checkOrderList")
+    public ResponseEntity <List<Order>> checkOrderList(){
+        return ResponseEntity.ok(adminService.checkListOfOrders());
+    }
+
+    @GetMapping("/processOrderResponse")
+    public ResponseEntity <ProcessOrderResponse> processOrder(@RequestBody @Valid String orderId){
+        return ResponseEntity.ok(adminService.processOrder(orderId));
     }
 }
