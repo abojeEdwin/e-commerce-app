@@ -7,6 +7,7 @@ import com.BNKBankApp.data.model.Product;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
 import com.BNKBankApp.dto.request.CreateCategoryRequest;
+import com.BNKBankApp.dto.request.FindProductRequest;
 import com.BNKBankApp.dto.resonse.*;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public interface AdminService {
      AllProductsInACategoryResponse getAllProductsInACategory(String category);
      Inventory findByProductId(String Id);
      List<Inventory> getAllInventory();
-     void removeProduct(String productName);
-     Product findProduct(String name);
+     void removeProduct(FindProductRequest findProductRequest);
+     Product findProduct(FindProductRequest findProductRequest);
      List <Order> checkListOfOrders();
      ProcessOrderResponse processOrder(String orderId);
 }

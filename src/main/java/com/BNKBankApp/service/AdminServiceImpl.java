@@ -6,6 +6,7 @@ import com.BNKBankApp.data.repository.CategoryRepo;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
 import com.BNKBankApp.dto.request.CreateCategoryRequest;
+import com.BNKBankApp.dto.request.FindProductRequest;
 import com.BNKBankApp.dto.resonse.*;
 import com.BNKBankApp.exception.*;
 import com.BNKBankApp.util.VerifyEmail;
@@ -81,13 +82,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void removeProduct(String productName) {
-        productServiceImpl.removeProductByName(productName);
+    public void removeProduct(FindProductRequest findProductRequest) {
+        productServiceImpl.removeProductByName(findProductRequest.getProductName());
     }
 
     @Override
-    public Product findProduct(String name) {
-        Product foundProduct = productServiceImpl.findProduct(name);
+    public Product findProduct(FindProductRequest findProductRequest) {
+        Product foundProduct = productServiceImpl.findProduct(findProductRequest.getProductName());
         if(foundProduct == null) {throw new NoProductFoundException("Product Not Found");}return foundProduct;}
 
     @Override

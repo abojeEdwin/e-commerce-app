@@ -5,6 +5,7 @@ import com.BNKBankApp.data.repository.CategoryRepo;
 import com.BNKBankApp.dto.request.AddProductRequest;
 import com.BNKBankApp.dto.request.AdminRegisterRequest;
 import com.BNKBankApp.dto.request.CreateCategoryRequest;
+import com.BNKBankApp.dto.request.FindProductRequest;
 import com.BNKBankApp.dto.resonse.*;
 import com.BNKBankApp.exception.DuplicateEmailException;
 import com.BNKBankApp.exception.DuplicateUsernameException;
@@ -174,8 +175,10 @@ class AdminServiceImplTest {
 
 
         assertEquals(2,productServiceImpl.count());
+        FindProductRequest findProductRequest = new FindProductRequest();
+        findProductRequest.setProductName("Grand pure soya oil");
 
-        adminServiceImpl.removeProduct("Grand pure soya oil");
+        adminServiceImpl.removeProduct(findProductRequest);
         assertEquals(  1,productServiceImpl.count());
 
     }
